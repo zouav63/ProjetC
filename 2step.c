@@ -53,6 +53,7 @@ bool appartientAEF(struct AEF aef, char string[]){
         for (int i = 0; i < sizeof aef.R; i++){
             if(string[a]==aef.R[i].gram[0] && currState==aef.R[i].source){
                 currState=aef.R[i].dest;
+                printf("%d", currState);
                 for (int j = 0; j < sizeof aef.F/sizeof aef.F[0]; j++){
                 if(currState == aef.F[j]){
                     if (a+1 == strlen(string)){
