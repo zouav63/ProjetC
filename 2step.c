@@ -18,56 +18,6 @@ struct AEF
     struct relation *R;
 };
 
-
-bool AEFcomplet(struct AEF aef){
-    int countQ = 0;
-    int nbQ = 0;
-    int nbR = 0;
-    int nbX = 0;
-    for (int i = 0; i < sizeof aef.Q; i++){
-        if (aef.Q[i] != 0 | countQ == 0){
-            nbQ++;
-            countQ = 1;
-        }
-    }
-    for (int i = 0; i <= sizeof aef.R; i++){
-        if (strlen(aef.R[i].gram) != 0){
-            nbR++;
-        }
-    }
-    for (int i = 0; i <= sizeof aef.X; i++){
-        if (aef.X[i]!='\0'){
-            nbX++;            
-        }
-    }
-    if (nbQ*nbX==nbR){
-        return true;
-    }
-    return false;
-}
-
-bool appartientAEF(struct AEF aef, char string[]){
-    int currState = aef.I;
-    int a = 0; // in string
-    while (a!=strlen(string)){
-        for (int i = 0; i < sizeof aef.R; i++){
-            if(string[a]==aef.R[i].gram[0] && currState==aef.R[i].source){
-                currState=aef.R[i].dest;
-                printf("%d", currState);
-                for (int j = 0; j < sizeof aef.F/sizeof aef.F[0]; j++){
-                if(currState == aef.F[j]){
-                    if (a+1 == strlen(string)){
-                        return true;
-                        }
-                    }
-                }
-                a++;
-            }
-        }
-    } 
-    return false;
-} 
-
 // void rendComplet(struct AEF aef){
 //     if(AEFcomplet(aef)==0){
 //         int nb=0; int nbX=0; int nbR; int countR;
@@ -103,6 +53,81 @@ bool appartientAEF(struct AEF aef, char string[]){
 //         }
 //     }
 // }
+
+bool AEFcomplet(struct AEF aef){
+    int countQ = 0;
+    int nbQ = 0;
+    int nbR = 0;
+    int nbX = 0;
+    for (int i = 0; i < sizeof aef.Q; i++){
+        if (aef.Q[i] != 0 | countQ == 0){
+            nbQ++;
+            countQ = 1;
+        }
+    }
+    for (int i = 0; i <= sizeof aef.R; i++){
+        if (strlen(aef.R[i].gram) != 0){
+            nbR++;
+        }
+    }
+    for (int i = 0; i <= sizeof aef.X; i++){
+        if (aef.X[i]!='\0'){
+            nbX++;            
+        }
+    }
+    if (nbQ*nbX==nbR){
+        return true;
+    }
+    return false;
+}
+
+
+bool appartientAEFF(struct AEF aef, char string[]){
+    int currState = aef.I;
+    int a = 0; // in string
+    while (a!=strlen(string)){
+        for (int i = 0; i < sizeof aef.R; i++){
+            if(string[a]==aef.R[i].gram[0] && currState==aef.R[i].source ){
+                currState=aef.R[i].dest;
+                for (int j = 0; j < sizeof aef.F/sizeof aef.F[0]; j++){
+                if(currState == aef.F[j]){
+                    if (a+1 == strlen(string)){
+                        return true;
+                        }
+                    }
+                }
+                a++;
+            }
+        }
+    } 
+    return false;
+} 
+
+bool appartientAEF(struct AEF aef, char string[]){
+    int currState = aef.I;
+    int a = 0; // in string
+    printf("%d\n",currState);
+    while (a!=strlen(string)){
+        for (int i = 0; i < sizeof aef.R; i++){
+        // printf("%c----%c,,, %d-----%d\n", string[a], aef.R[i].gram[0],currState,aef.R[i].source);
+            if(string[a]==aef.R[i].gram[0] && currState==aef.R[i].source ){
+                                printf("%d\n", currState);
+
+                currState=aef.R[i].dest;
+                printf("%d---%d---%c\n", currState,aef.R[i].dest,aef.R[i].gram[0]);
+                for (int j = 0; j < sizeof aef.F/sizeof aef.F[0]; j++){
+                if(currState == aef.F[j]){
+                    if (a+1 == strlen(string)){
+                        return true;
+                        }
+                    }
+                }
+                a++;
+            }
+        }
+    } 
+    return false;
+} 
 
 void afficherAEF(struct AEF aef)
 {
@@ -140,7 +165,7 @@ void afficherAEF(struct AEF aef)
 }
 
 int main(int argc, char *argv[]){
-    char ch, file_name[30] = "../AEF.txt";
+    char ch, file_name[30] = "AEF.txt";
     FILE *fp;
     fp = fopen(file_name, "r"); // read mode
     if (fp == NULL)
@@ -162,8 +187,8 @@ int main(int argc, char *argv[]){
     bool read = false;
     int count = 0, countR = 0;
     int test = 0;
-    // Mode read permet de concataner tous les charactères courants
-    // read=false qand
+    // Mode read permet de concatainer tous les charactères courants
+    // read=false 
     while ((ch = fgetc(fp)) != EOF)
     {
         if (ch == 'X')
@@ -258,10 +283,8 @@ int main(int argc, char *argv[]){
         }
     }
 
-    //a
-
-    //afficherAEF(aef);
-    printf("%d\n", appartientAEF(aef, "ababbbbbbbbb"));
+    afficherAEF(aef);
+    printf("%d\n", appartientAEFF(aef, "aba"));
     printf("%d\n", AEFcomplet(aef));
     //rendComplet(aef);
     fclose(fp);

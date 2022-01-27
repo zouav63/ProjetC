@@ -48,7 +48,7 @@ bool appartientAutomate(char str[], char L[]){
 int main(int argc, char *argv[]){
     char L[] = "aaa*b*ab+bb*"; // Equation de l'automate -> peut être traduit shématiquement 
     struct arr Lang=transform(L);
-    char *string="ba";
+    char *string="aaab";
     for (int i = 0; i < sizeof Lang.arr / sizeof Lang.arr[0]; i++){
         if(appartientAutomate(string, Lang.arr[i])==1){
             printf("Le string appartient à l'automate\n");
@@ -58,17 +58,6 @@ int main(int argc, char *argv[]){
     printf("Le string n'appartient pas à l'automate\n");
     return 0;
 }
-
-// else if(L[i+1]=='('){
-//     /* code */
-//     i+=2;
-//     int j=i;
-//     char res[100]="";
-//     while(L[i]!=')'){
-//         //code
-
-//     }
-// }
 
 
 // struct arr transform(char str[]){

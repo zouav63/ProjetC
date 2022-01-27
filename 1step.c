@@ -36,12 +36,6 @@ char* puis(char string[], int m){
     }
 }
 
-
-// char string='1'
-// char string[5]="hello"
-// char* string = "hello"
-// string = malloc(size of char)
-
 bool estFini(char str[]){
     for(int i=0; i<strlen(str); i++){
         if(str[i]=='*'){
